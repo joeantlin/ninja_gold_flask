@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ninja Gold</title>
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/css/uikit.min.css" />
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <!-- UIkit JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/js/uikit-icons.min.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Welcome to Ninja Gold!</h1>
+            <h2>{{ session['user'] }}'s gold: {{ session['gold'] }}</h2>
+            <p>You have {{ 15 - session['tries'] }} decisions left</p>
+        </div>
+
+        <div class="options">
+            <form class="gold" action="/process_gold" method="post">
+                <h3>Farm</h3>
+                <p>(earn 0-30 gold)</p>
+                <input type="hidden" name="property" value="farm">
+                <input type="submit" value="Find Gold">
+            </form>
+            <form class="gold" action="/process_gold" method="post">
+                <h3>Cave</h3>
+                <p>(earn 10-20 gold)</p>
+                <input type="hidden" name="property" value="cave">
+                <input type="submit" value="Find Gold">
+            </form>
+            <form class="gold" action="/process_gold" method="post">
+                <h3>House</h3>
+                <p>(earn 15 gold)</p>
+                <input type="hidden" name="property" value="house">
+                <input type="submit" value="Find Gold">
+            </form>
+            <form class="purple" action="/process_gold" method="post">
+                <h3>Casino</h3>
+                <p>(earn/lose 0-50 gold)</p>
+                <input type="hidden" name="property" value="casino">
+                <input type="submit" value="Gamble Gold">
+            </form>
+
+            <!--Game auto restarts if win/lose instead of button-->
+            <!--
+            {#{% if session['tries'] >= 15 %}
+                <div class="restart">
+                    <a href="/newgame"><button>Begin New Game</button></a>
+                </div>
+            {% endif %}#}
+            -->
+
+        </div>
+        <div class="log">
+            <h4>Activity Log</h4>
+            <div class="activity">
+                {{ session['log'] | safe }}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
